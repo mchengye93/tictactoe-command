@@ -4,7 +4,7 @@ var prompt = require('prompt');
 console.log("Welcome to Tic Tac Toe!");
 
 
-var tictactoe = ['0','1','2','3','4','5','6','7','8'];
+
 
 //Print board
 
@@ -71,7 +71,7 @@ const checkWinner = (tictactoe) => {
 
 var winner = '';
 
-while( winner === '') {
+var tictactoe = ['0','1','2','3','4','5','6','7','8'];
 
 printBoard(tictactoe);
 //Start the prompt
@@ -80,8 +80,7 @@ var player= 'X';
 
 if (!checkWinner(tictactoe)) {
     prompt.start();
-
-    //
+    
     // Get two properties from the user: username and email
     //
     prompt.get(['Position'], function (err, result) {
@@ -90,12 +89,49 @@ if (!checkWinner(tictactoe)) {
       //
       console.log('Command-line input received:');
       console.log('  Position: ' + result.Position);
+
+      if (tictactoe[result.Position] === 'O' || tictactoe[result.Position] === 'X'){
+          console.log('Please try another position');
+      } else {
+          tictactoe[result.Position] = player;
+          
+      }
     
     });
 }
+const continueGame = (player) => {
+    
+    prompt.get(['Position'], function (err, result) {
+        //
+        // Log the results.
+        //
+        console.log('Command-line input received:');
+        console.log('  Position: ' + result.Position);
+  
+        if (tictactoe[result.Position] === 'O' || tictactoe[result.Position] === 'X'){
+            console.log('Please try another position');
+        } else {
+            tictactoe[result.Position] = player;
+            checkWinner(tictactoe);
+            if (checkWinner(tictactoe)) {
+                console.log(checkWinner(tictactoe));
 
-
+            } else {
+                if(player === 'X'){
+                    continueGame('O');
+                }
+                else {
+                    continueGame('X');
+                }
+                
+            }
+        }
+      
+      });
 }
+
+
+
 //Update board as player put an input
 
 
